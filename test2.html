@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="./bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<link href="./assets/css/utils.css" rel="stylesheet">
+	<script src="./assets/js/jquery.min.js"></script>
+	<script src="./bootstrap/js/bootstrap.min.js"></script>
+	<script src="./Chart.min.js"></script>
+	<script src="./utils3.js"></script>	
+	<script src="./assets/js/utilitaire.js"></script>
+    <script src="./assets/js/html2canvas.js"></script>
+    <script src="./assets/js/jspdf.debug.js"></script>
+	<title>KPI</title>
+</head>
+<body>
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+		<div class="container-fluid">
+		  <a class="navbar-brand" href="index.html">
+			<img src="./assets/images/logo.png" alt="" width="30" height="24" class="d-inline-block align-top">
+			DIGIDEX KPI
+		  </a>
+		  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		  </button>
+		  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+			<div class="navbar-nav">
+				<a class="nav-link active" aria-current="page" href="index.html">Home</a>
+				<a class="nav-link" href="detailler.html">Statistique Parametres</a>
+				<a class="nav-link" href="pays.html">Statistique par Pays</a>
+				
+			</div>
+			<form class="form-inline my-2 my-lg-0">
+				<button class="btn btn-outline-primary my-2 my-sm-0" type="button" data-toggle="modal" data-target="#exampleModalCenter">Importer un fichier</button>
+				<button class="btn btn-outline-primary my-2 my-sm-0" type="button" id="downloadfullpage" >
+					Exporter le graph
+				 </button>
+			</form>
+		  </div>
+		</div>
+	</nav>
+	<div class="container-fluid">
+		
+		<section class="mini" id="work-process">
+			<div class="mini-content">
+				<div class="container">
+					<div class="row">
+						
+					</div>	
+					<div class="row">
+						
+					</div>
+				</div>
+			</div>
+		</section>
+	</div>
+		
+	<script>
+		
+		
+		const URL = 'http://mcc-mnc.com/';
+       // $.get(URL, function(response) { alert(response) });
+        $.ajax({
+            url: 'https://github.com/musalbas/mcc-mnc-table/blob/master/mcc-mnc-table.json',
+            //dataType: 'json',
+            type:'get',
+            cors: true,
+            headers: {
+                "charset":"UTF-8",
+                "accept": "application/json",
+                "Access-Control-Allow-Origin":"*",
+                "Access-Control-Allow-Credentials":"true",
+                },
+            //data:value,
+            success: function(data) {
+                console.log(data);   
+                alert(data.message);
+            }.bind(this),
+            error: function(xhr, status, err) {}.bind(this)
+        });
+	
+		
+		
+		
+	</script>
+
+</body>
+</html>

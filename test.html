@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Interrogation d'une API REST</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+	<style type="text/css"> body{padding: 20px; margin: 5px;} #indicatif{border-radius: 5px;} </style>
+</head>
+<body>
+	<div class="container-fluid">
+		<div class="row">
+			<button class="btn btn-outline-secondary col-xs-2 ml-3" id="pays">Liste des étudiants</button>
+			<input class="offset-7" type="number" id="indicatif" placeholder="Chercher par indicatif">
+			<button class="btn btn-secondary col-xs-3 ml-3" id="chercher">Chercher</button>
+		</div>	
+	</div>
+	<div class="container" id="all">
+		<div class="container mb-5">
+			<h1 align="center">Liste des étudiants</h1>
+		</div>
+		<div class="container-fluid">
+			<table id="allTable" class="table table-bordered table-striped">
+				<thead class="thead-light">
+					<th>NOM</th>
+					<th>Prénom</th>
+					<th>Pays</th>
+					<th>Genre</th>
+				</thead>
+				<tbody></tbody>
+			</table>
+		</div>
+	</div>
+
+	<div class="container-fluid" id="specific">
+		<div class="container mb-5">
+			<h1 align="center">Détails</h1>
+		</div>
+		<table id="specificTable" class="table table-bordered table-striped">
+		<thead class="thead-light">
+			<th>Pays</th>
+			<th>Capitale</th>
+			<th>Région</th>
+			<th>Sous-région</th>
+			<th>Population</th>
+			<th>Drapeau</th>
+		</thead>
+		<tbody ></tbody>
+	</table>
+	</div>
+</body>
+</html>
+
+<script type="text/javascript">
+	$('#all').hide();
+	$('#specific').hide();
+	const URL = 'http://mcc-mnc.com/';
+	fetch(URL)
+	.then(res => res.text())
+	.then(text => {
+		console.log(text);
+	})
+	.catch(err => console.log(err));
+	
+	$.getJSON("https://sheet2api.com/v1/h7lzZHv2S1Fj/tp1", function(data){
+		$('#allTable tbody tr').remove();
+		$.each(data, function(index, value){
+			//ajouter ligne
+			$('#allTable tbody').append('<tr></tr>');
+			//ajouter cellules			
+			$('#allTable tbody tr:last').append('<td>' + value.nom + '</td>');
+			$('#allTable tbody tr:last').append('<td>' + value.prenom + '</td>');
+			$('#allTable tbody tr:last').append('<td>' + value.pays + '</td>');
+			$('#allTable tbody tr:last').append('<td>' + value.genre + '</td>');			
+		});
+	});
+
+	$('#pays').click(function(){
+		$('#specific').hide();
+		$('#all').show();
+	});
+
+	$('#chercher').click(function(){
+		$('#specificTable tbody tr').remove();
+		var code = $('#indicatif').val();
+		if(!(code == "")){
+			$.getJSON("https://restcountries.eu/rest/v2/callingcode/" + code, function(data){
+				$.each(data, function(index, value){
+					//ajouter ligne
+					$('#specificTable tbody').append('<tr></tr>');
+					//ajouter cellules			
+					$('#specificTable tbody tr:last').append('<td>' + value.name + '</td>');
+					$('#specificTable tbody tr:last').append('<td>' + value.capital + '</td>');
+					$('#specificTable tbody tr:last').append('<td>' + value.region + '</td>');
+					$('#specificTable tbody tr:last').append('<td>' + value.subregion + '</td>');
+					$('#specificTable tbody tr:last').append('<td>' + value.population + " habitants " + '</td>');
+					$('#specificTable tbody tr:last').append('<td><img src="' + value.flag + '" height=50 width=60></img>');
+				});
+			});
+			
+			$('#all').hide();
+			$('#specific').show();
+		}
+		
+	});
+</script>
+<script type="text/javascript">
+	//$('#all').hide();
+    
+
+	$('#send').click(function(){
+        console.log("okay")
+		if(!($('#DateVente').val() == "")){
+			var data = {
+                'DateVente': $('#DateVente').val(),
+                'CodeAgent': $('#CodeAgent').val(),
+                'CodeProduit': $('#CodeProduit').val(),
+                'Quantite': $('#Quantite').val(),
+                'Montant': $('#Montant').val(),
+            };
+            var url = 'https://sheet2api.com/v1/kecmmJ3Qfeki/ami/Feuille%201';
+
+            fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+            }).then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+		}
+		
+	});
+</script>
