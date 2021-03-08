@@ -1,3 +1,6 @@
+
+const defaultAPI = "http://127.0.0.1:8000/" 
+//const axios = require('axios').default;
 const defaultOptions = {
     responsive: true,
     title: {
