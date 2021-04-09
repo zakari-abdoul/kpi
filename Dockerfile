@@ -1,2 +1,5 @@
-From nginx:latest
-COPY . /usr/share/nginx/kpi_front
+FROM  nginx:latest
+ADD . /app/
+WORKDIR /app
+EXPOSE 8090
+VOLUME /app/data
